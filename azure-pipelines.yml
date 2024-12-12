@@ -1,19 +1,32 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
-- main
+- main  # Trigger build on main branch changes
 
 pool:
-  vmImage: ubuntu-latest
+  vmImage: 'windows-latest'
+
+variables:
+  BuildConfiguration: 'Development'
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+# 1. Check out the source code
+- task: Checkout@1
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+# 2. Restore NuGet packages (if needed for the project)
+- task: NuGetCommand@2
+  inputs:
+    command: 'restore'
+    restoreSolution: '**/*.sln'
+
+# 3. Build the SSIS project
+- task: MSBuild@1
+  inputs:
+    solution: 'SSISProject/MySSISProject.dtproj'
+    msbuildArguments: '/p:Configuration=$(BuildConfiguration) /p:Platform=AnyCPU'
+    configuration: '$(BuildConfiguration)'
+    clean: true
+
+# 4. Publish build artifacts
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'SSISBuildOutput'
