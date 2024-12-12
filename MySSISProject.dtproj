@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ProjectGuid>{B12345C6-789D-4EFG-HIJK-1234567890AB}</ProjectGuid>
+  <ProjectName>MySSISProject</ProjectName>
+  <TargetServerVersion>SQLServer2019</TargetServerVersion>
+  <DeploymentModel>Project</DeploymentModel>
+  <Packages>
+    <Package>
+      <Name>Package1</Name>
+      <FullPath>Packages\Package1.dtsx</FullPath>
+    </Package>
+    <Package>
+      <Name>Package2</Name>
+      <FullPath>Packages\Package2.dtsx</FullPath>
+    </Package>
+  </Packages>
+  <Connections>
+    <Connection>
+      <Name>MyDatabaseConnection</Name>
+      <ConnectionString>Data Source=MyServer;Initial Catalog=MyDatabase;Integrated Security=SSPI;</ConnectionString>
+    </Connection>
+  </Connections>
+  <Configurations>
+    <Configuration>
+      <Name>DevelopmentConfig</Name>
+      <FullPath>Configurations\DevelopmentConfig.dtsConfig</FullPath>
+    </Configuration>
+  </Configurations>
+  <ProjectExtensions>
+    <ProjectDeploymentModel>true</ProjectDeploymentModel>
+    <SSISPackageFormatVersion>8</SSISPackageFormatVersion>
+  </ProjectExtensions>
+</Project>
